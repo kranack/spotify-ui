@@ -1,6 +1,6 @@
 import config from '../config/spotify.auth.json'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UserStore from './store/UserStore'
 

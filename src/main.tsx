@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -10,14 +9,7 @@ import Playlist, { loader as playlistLoader } from './Playlist'
 import ErrorPage from './Error'
 import PlaylistForm from './PlaylistForm'
 import Track, { loader as trackLoader } from './Track'
-
-function Root() {
-  return (
-    <>
-      <Outlet /> 
-    </>
-  )
-}
+import Root from './Root'
 
 const router = createBrowserRouter([
   {

@@ -1,5 +1,7 @@
+import { SpotifyUser } from "../interfaces/Spotify"
+
 interface DataSet {
-  [attribute: string]: any
+  [attribute: string]: string|number|object|SpotifyUser
 }
 
 class UserStore {
@@ -10,7 +12,7 @@ class UserStore {
     this.dataset = {}
   }
 
-  public set(key: string, value: any) {
+  public set(key: string, value: string|number|object|SpotifyUser) {
     this.dataset[key] = value
   }
 
