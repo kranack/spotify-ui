@@ -1,8 +1,8 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
 
 import { getCodeFromURL } from './services/auth'
-import Spotify from './services/spotify'
+import { registerHandlers } from './handler'
 
 // The built directory structure
 //
@@ -52,44 +52,8 @@ function createWindow() {
     return;
   })
 
-  // IPC Main handler
-  ipcMain.handle('spotify-get-playlists', async (e) => {
-    const spotify = Spotify.getInstance()
-    const playlists = await spotify.getPlaylists()
-
-    return playlists
-  })
-
-  ipcMain.handle('spotify-get-playlist', async (e, id) => {
-    const spotify = Spotify.getInstance()
-    const playlist = await spotify.getPlaylist(id)
-    
-    console.log(playlist)
-
-    return playlist
-  })
-
-  ipcMain.handle('spotify-get-url', async (e, url) => {
-    const spotify = Spotify.getInstance()
-    const result = await spotify.request(url)
-
-    console.log(result)
-
-    return result
-  })
-
-  ipcMain.handle('spotify-create-playlist', async (e, name, fill) => {
-    const spotify = Spotify.getInstance()
-    const playlist = await spotify.createPlaylist(name)
-    
-    if (fill) {
-      const tracks = await spotify.getLiked({ year: name })
-      const uris = tracks.map(track => track.track.uri)
-
-      await spotify.addTracksToPlaylist(playlist.id, uris)
-    }
-    return playlist.id
-  })
+  // IPC Main handlers
+  registerHandlers()
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common

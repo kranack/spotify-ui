@@ -9,6 +9,7 @@ import User from './User'
 import Playlist, { loader as playlistLoader } from './Playlist'
 import ErrorPage from './Error'
 import PlaylistForm from './PlaylistForm'
+import Track, { loader as trackLoader } from './Track'
 
 function Root() {
   return (
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
       {
         path: 'playlist/create',
         element: <PlaylistForm />
+      },
+      {
+        path: 'track/:id',
+        element: <Track />,
+        loader: trackLoader
       }
     ]
   },

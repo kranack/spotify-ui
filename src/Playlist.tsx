@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
 import Navigation from './Navigation'
 
 
@@ -65,6 +65,7 @@ function Playlist() {
               <th>Artist</th>
               <th>Album</th>
               <th>Duration</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -76,10 +77,15 @@ function Playlist() {
                       <img src={item.track.album.images[0].url} />
                     </figure>
                   </td>
-                  <td>{item.track.name}</td>
-                  <td>{item.track.artists.map(artist => artist.name).join(',')}</td>
-                  <td>{item.track.album.name}</td>
+                  <td><a href={item.track.uri}>{item.track.name}</a></td>
+                  <td>{item.track.artists.map(artist => artist.name).join(', ')}</td>
+                  <td><a href={item.track.album.uri}>{item.track.album.name}</a></td>
                   <td>{formatDuration(item.track.duration_ms)}</td>
+                  <td>
+                    <span className="icon has-text-info">
+                      <Link to={`/track/${item.track.id}`}><i className="fas fa-info-circle"></i></Link>
+                    </span>
+                  </td>
                 </tr>
               )
             })}

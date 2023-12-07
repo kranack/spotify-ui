@@ -54,8 +54,8 @@ function Home() {
 
   useEffect(() => {
     window.ipcRenderer.on('connect-user', (e, data) => {
-      console.log(e, data.user)
       store.set('user', data.user)
+      store.set('totalLiked', data.total)
 
       navigate('/user')
     })

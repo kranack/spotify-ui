@@ -33,35 +33,13 @@ const getCodeFromURL = (callbackURL: string, webContents: WebContents) => {
         const spotify = Spotify.getInstance()
         spotify.keys = { access_token: response.data.access_token }
 
-        spotify.getUser().then(user => {
-          webContents.send('connect-user', { user })
+        Promise.all([ spotify.getUser(), spotify.getTotalLiked()]).then(responses => {
+          webContents.send('connect-user', { user: responses[0], total: responses[1] })
         })
       })
       .catch(error => {
         console.log(error)
       })
-    
-   /*
-      const authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        form: {
-          code: request.code,
-          redirect_uri: 'http://localhost:5173/callback',
-          grant_type: 'authorization_code'
-        },
-        headers: {
-          //'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-        },
-        json: true
-      };
-  
-      request.post(authOptions, (error, response, body) => {
-        console.log(error, response, body)
-        if (!error && response.statusCode === 200) {
-          //
-        }
-      })
-      */
   }
 
 }

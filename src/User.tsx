@@ -54,7 +54,12 @@ function List(props: { items: Array<SpotifyPlaylist>, limit: number, pagination:
                 </div>
                 <div className="media-content">
                   <p className="title is-spaced"><Link to={`/playlist/${playlist.id}`}>{playlist.name}</Link></p>
-                  <p className="subtitle">{playlist.tracks.total} tracks</p>
+                  <p className="subtitle">
+                    <div>
+                      <span className="icon"><a href={playlist.uri} className="has-text-success"><i className="fab fa-spotify"></i></a></span>
+                    </div>
+                    <span className="icon"><i className="fas fa-music"></i></span> {playlist.tracks.total} tracks
+                  </p>
                 </div>
               </article>
             </div>
@@ -77,14 +82,14 @@ function PlayLists(props: { playlists: Array<SpotifyPlaylist> }) {
   )
 }
 
-function UserCard(props: { user: SpotifyUser }) {
+function UserCard(props: { user: SpotifyUser, total: number }) {
   return (
     <div className="card">
       <div className="card-content">
         <div className="media">
           <div className="media-left">
-            <figure className="image is-48x48">
-              <img src={props.user.images[0].url} alt={props.user.id} />
+            <figure className="image is-64x64">
+              <img src={props.user.images[1].url} alt={props.user.id} />
             </figure>
           </div>
           <div className="media-content">
@@ -94,7 +99,20 @@ function UserCard(props: { user: SpotifyUser }) {
         </div>
 
         <div className="content">
-          <p><b>{props.user.followers.total}</b> followers</p>
+          <div className="block user-infos">
+            <div>
+              <span className="icon has-text-info">
+                <i className="fas fa-users"></i>
+              </span>
+              <b>{props.user.followers.total}</b> followers
+            </div>
+            <div>
+              <span className="icon has-text-danger">
+                <i className="fas fa-heart"></i>
+              </span>
+              <b>{props.total}</b> liked songs
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -107,6 +125,7 @@ function User() {
   const navigate = useNavigate()
   const [playlists, setPlaylists] = useState([])
   const user = store.get('user')
+  const totalLiked = store.get('totalLiked')
 
   useEffect(() => {
     if (!user) navigate('/')
@@ -120,7 +139,7 @@ function User() {
     <>
       <div className="columns is-centered">
         <div className="column is-narrow user">
-          <UserCard user={user} />
+          <UserCard user={user} total={totalLiked} />
         </div>
       </div>
       <div className="columns">

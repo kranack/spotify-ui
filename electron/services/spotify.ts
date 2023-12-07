@@ -59,6 +59,10 @@ class Spotify {
                     .catch(console.error)
   }
 
+  public getTotalLiked() {
+    return this.http.get('/me/tracks?limit=1').then(response => response.data.total || 0)
+  }
+
   public async getLiked(filter: { year: string }) {
     let tracks = []
 
@@ -72,12 +76,24 @@ class Spotify {
 
       tracks = tracks.concat(result.items)
       url = result.next
-    } while (Number(lastYearTrack) >= Number(filter.year));
+    } while (Number(lastYearTrack) >= Number(filter.year))
 
     tracks = tracks.filter(track => track.added_at.split('-')[0] === filter.year)
     tracks.reverse() // sort tracks
     
     return tracks
+  }
+
+  public getTrack(id: string) {
+    this.checkTokens()
+
+    return this.http.get(`/tracks/${id}`).then(response => response.data)
+  }
+
+  public getTrackInfos(id: string) {
+    this.checkTokens()
+
+    return this.http.get(`/recommendations?limit=10&seed_tracks=${id}`).then(response => response.data)
   }
 
   public createPlaylist(name: string) {
