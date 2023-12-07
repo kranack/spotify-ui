@@ -1,8 +1,5 @@
-import React from 'react'
 import { Outlet } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
-//import App from './App.tsx'
-import './index.css'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.sass'
@@ -12,14 +9,6 @@ import User from './User'
 import Playlist, { loader as playlistLoader } from './Playlist'
 import ErrorPage from './Error'
 import PlaylistForm from './PlaylistForm'
-
-/*
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
-*/
 
 function Root() {
   return (

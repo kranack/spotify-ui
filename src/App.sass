@@ -1,6 +1,19 @@
 @charset "utf-8"
 @import "../node_modules/bulma/bulma.sass"
 
+html
+  overflow-y: auto
+
+#root
+  height: calc(100vh - 3.25rem) // 100vh - fixed top menu
+
+// Home
+.home
+  height: 100%
+
+  .column
+    display: flex
+    align-items: center
 
 // Playlists
 .playlists
